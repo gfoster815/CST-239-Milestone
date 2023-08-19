@@ -1,7 +1,5 @@
 package app;
 
-import java.util.ArrayList;
-
 /**
  * creates Storefront class: TBD if needed. Created for 'initializing state of
  * store'

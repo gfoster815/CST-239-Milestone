@@ -54,7 +54,7 @@ public class InventoryManager {
 	 * @return the product that is put onto the shelf, and increases inventory
 	 *         quantity by 1
 	 */
-	public SalableProduct getProductToShelf(String name) {
+	public SalableProduct cancelPurchase(String name) {
 		SalableProduct product = null;
 		for (int i = 0; i < catalog.size(); i++) {
 			if (catalog.get(i).getName().equals(name)) {

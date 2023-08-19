@@ -71,7 +71,7 @@ public class StoreFrontApplication {
 				 * purchases items. Since inventory is already handled with adding item to cart,
 				 * cart just needs cleared
 				 */
-				cart.clearCart();
+				cart.completePurchase();
 
 				System.out.println(
 						"Thanks for your purchase! Want to buy more? If so, say Shop! If you are done, say Purchase, Leave or CancelPurchase.");
@@ -84,7 +84,7 @@ public class StoreFrontApplication {
 				command = input.next();
 				cart.removeItemFromCart(command);
 
-				inventory.getProductToShelf(command);
+				inventory.cancelPurchase(command);
 
 				System.out.println("Check out your cart!");
 				cart.showCart();
@@ -98,7 +98,7 @@ public class StoreFrontApplication {
 			} else if (command.toLowerCase().equals("cancelpurchase")) {
 				System.out.println("What item do you want to return?");
 
-				inventory.getProductToShelf(command);
+				inventory.cancelPurchase(command);
 
 				System.out.println(
 						"Want to buy more? If so, say Shop! If you are done, say Purchase, RemoveItemFromCart, CancelPurchase, or Leave.");
@@ -110,6 +110,7 @@ public class StoreFrontApplication {
 		}
 
 		System.out.println("Thanks for coming!");
+		input.close();
 	}
 
 }

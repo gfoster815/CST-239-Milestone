@@ -52,7 +52,7 @@ public class ShoppingCart {
 	/**
 	 * empties cart when items are purchased
 	 */
-	public void clearCart() {
+	public void completePurchase() {
 		cart.clear();
 	}
 
