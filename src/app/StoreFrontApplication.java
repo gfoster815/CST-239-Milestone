@@ -99,7 +99,7 @@ public class StoreFrontApplication {
 				 */
 			} else if (command.toLowerCase().equals("cancelpurchase")) {
 				System.out.println("What item do you want to return?");
-
+				command = input.next();
 				inventory.cancelPurchase(command);
 
 				System.out.println(
