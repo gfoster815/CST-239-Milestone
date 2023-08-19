@@ -74,15 +74,14 @@ public class StoreFrontApplication {
 				cart.showCart();
 				System.out.println(
 						"Want to buy more? If so, say Shop! If you are done shopping, say Purchase, RemoveItemFromCart, CancelPurchase, or Leave.");
+				
 				command = input.next();
 
 			} else if (command.toLowerCase().equals("cancelpurchase")) {
 				System.out.println("What item do you want to return?");
 
-				SalableProduct product = inventory.getProduct(command);
-				product.incrementQuantity();
-				
-				store.purchaseCanceled(product);
+				SalableProduct tempProduct = inventory.getProduct(command);
+				tempProduct.incrementQuantity();
 				
 
 				System.out.println(
