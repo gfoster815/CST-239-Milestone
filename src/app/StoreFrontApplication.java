@@ -112,6 +112,7 @@ public class StoreFrontApplication {
 		}
 
 		System.out.println("Thanks for coming!");
+		store.closeStore();
 		input.close();
 	}
 
