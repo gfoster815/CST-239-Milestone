@@ -33,7 +33,7 @@ public class StoreFrontApplication {
 		command = input.next();
 		ShoppingCart cart = new ShoppingCart();
 
-		while (command.toLowerCase() != "Leave") {
+		while (command.toLowerCase() != "leave") {
 
 			if (command.toLowerCase().equals("shop")) {
 				System.out
@@ -42,11 +42,11 @@ public class StoreFrontApplication {
 				inventory.showInventory(); // TODO: show sorted
 
 				command = input.next();
-				if (command.toLowerCase().equals("Leave")) {
+				if (command.toLowerCase().equals("leave")) {
 					break; //TODO: figure out how to break out of here...
 				}
 
-				SalableProduct tempProduct = inventory.getProduct(command);
+				SalableProduct tempProduct = inventory.getProductOffShelf(command);
 				cart.addItemToCart(tempProduct);
 				System.out.println("Check out your cart!");
 				cart.showCart();
@@ -67,8 +67,8 @@ public class StoreFrontApplication {
 				command = input.next();
 				cart.removeItemFromCart(command);
 
-				SalableProduct product = inventory.getProduct(command);
-				product.incrementQuantity();
+				inventory.getProductToShelf(command);
+				
 
 				System.out.println("Check out your cart!");
 				cart.showCart();
@@ -80,8 +80,8 @@ public class StoreFrontApplication {
 			} else if (command.toLowerCase().equals("cancelpurchase")) {
 				System.out.println("What item do you want to return?");
 
-				SalableProduct tempProduct = inventory.getProduct(command);
-				tempProduct.incrementQuantity();
+				inventory.getProductToShelf(command);
+				
 				
 
 				System.out.println(

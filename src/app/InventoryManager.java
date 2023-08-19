@@ -20,25 +20,27 @@ public class InventoryManager {
 		}
 	}
 
-	public SalableProduct getProduct(String name) {
+	public SalableProduct getProductOffShelf(String name) {
 		SalableProduct product = null;
 		for (int i = 0; i < catalog.size(); i++) {
 			if (catalog.get(i).getName().equals(name)) {
+				catalog.get(i).decrementQuantity();
 				return catalog.get(i);
 			}
 		}
 		return product;
 	}
 	
-	
-
-	public void incrementQuantity(String name) {
+	public SalableProduct getProductToShelf(String name) {
+		SalableProduct product = null;
 		for (int i = 0; i < catalog.size(); i++) {
 			if (catalog.get(i).getName().equals(name)) {
-				catalog.remove(i);
-				break;
+				catalog.get(i).incrementQuantity();
+				return catalog.get(i);
 			}
 		}
-
+		return product;
 	}
+
+	
 }

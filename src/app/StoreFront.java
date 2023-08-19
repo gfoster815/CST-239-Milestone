@@ -22,12 +22,6 @@ public class StoreFront {
 	}
 
 
-	public void purchaseCanceled(SalableProduct product) {
 
-
-
-		// TODO: figure out to how return these guys
-
-	}
 
 }

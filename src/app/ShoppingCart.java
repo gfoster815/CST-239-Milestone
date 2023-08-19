@@ -34,7 +34,7 @@ public class ShoppingCart {
 
 	public void itemsPurchased() {
 		for (int i = 0; i < cart.size(); i++) {
-				cart.get(i).decrementQuantity();
+				
 
 		}
 
