@@ -64,6 +64,8 @@ public class StoreFrontApplication {
 				cart.showCart();
 				System.out.println(
 						"Want to buy more? If so, say Shop! If you are done, say Purchase, RemoveItemFromCart, CancelPurchase, or Leave.");
+				
+				//TODO: Remove items from the cart if they leave
 
 				command = input.next();
 			} else if (command.toLowerCase().equals("purchase")) {
