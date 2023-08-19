@@ -53,7 +53,7 @@ public class StoreFrontApplication {
 
 				command = input.next();
 				if (command.toLowerCase().equals("leave")) {
-					break; // TODO: figure out how to break out of here...
+					break; 
 				}
 				/**
 				 * takes product that is mentioned to add to cart and take out of inventory
