@@ -64,5 +64,15 @@ public class InventoryManager {
 		}
 		return product;
 	}
+	
+	public boolean isValidItem(String name) {
+		for (int i = 0; i < catalog.size(); i++) {
+			if (catalog.get(i).getName().equals(name)) {
+				catalog.get(i).incrementQuantity();
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

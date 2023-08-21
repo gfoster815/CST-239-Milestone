@@ -58,12 +58,20 @@ public class StoreFrontApplication {
 				/**
 				 * takes product that is mentioned to add to cart and take out of inventory
 				 */
+				
+				boolean isValid = inventory.isValidItem(command);
+				if (isValid) {
 				SalableProduct tempProduct = inventory.getProductOffShelf(command);
 				cart.addItemToCart(tempProduct);
 				System.out.println("Check out your cart!");
 				cart.showCart();
+				
 				System.out.println(
 						"Want to buy more? If so, say Shop! If you are done, say Purchase, RemoveItemFromCart, CancelPurchase, or Leave.");
+				}
+				else {
+					System.out.println("Whoops! We don't have that item. Let's start again. Do you want to Shop, Purchase, ReemoveItemFromCart, CancelPurchase, or Leave?");
+				}
 				
 				//TODO: Remove items from the cart if they leave
 
@@ -106,7 +114,13 @@ public class StoreFrontApplication {
 						"Want to buy more? If so, say Shop! If you are done, say Purchase, RemoveItemFromCart, CancelPurchase, or Leave.");
 				command = input.next();
 			} else {
-				break;
+				if (command.toLowerCase().equals("leave")) {
+					break;
+				}
+				else {
+					System.out.println("Whoops! That wasn't an option. What would you like to do?");
+					command = input.next();
+				}
 			}
 
 		}
