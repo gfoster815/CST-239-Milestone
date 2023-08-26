@@ -16,7 +16,7 @@ public class StoreFrontApplication {
 		String command;
 		Scanner input = new Scanner(System.in);
 		store.openStore();
-		System.out.println("Welcome to our store! We will help you with any of your fighting needs!");
+		System.out.println("Welcome to Garrett's Fantasy Costco! We will help you with any of your fighting needs!");
 		/**
 		 * Initializes inventory
 		 */
