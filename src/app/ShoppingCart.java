@@ -49,10 +49,14 @@ public class ShoppingCart {
 		}
 	}
 
+	public ArrayList<SalableProduct> getCart(){
+			return cart;
+	}
+	
 	/**
 	 * empties cart when items are purchased
 	 */
-	public void completePurchase() {
+	public void clearCart() {
 		cart.clear();
 	}
 

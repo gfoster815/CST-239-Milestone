@@ -42,11 +42,17 @@ public class InventoryManager {
 		SalableProduct product = null;
 		for (int i = 0; i < catalog.size(); i++) {
 			if (catalog.get(i).getName().equals(name)) {
-				catalog.get(i).decrementQuantity();
 				return catalog.get(i);
 			}
 		}
 		return product;
+	}
+	
+	public void purchaseProducts(ArrayList<SalableProduct> itemsInCart) {
+		for (int i = 0; i < itemsInCart.size(); i++) {
+			itemsInCart.get(i).decrementQuantity();
+
+		}
 	}
 
 	/**
@@ -68,7 +74,6 @@ public class InventoryManager {
 	public boolean isValidItem(String name) {
 		for (int i = 0; i < catalog.size(); i++) {
 			if (catalog.get(i).getName().equals(name)) {
-				catalog.get(i).incrementQuantity();
 				return true;
 			}
 		}

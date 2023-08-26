@@ -1,10 +1,13 @@
 package app;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 /**
  * Creates class of StoreFrontApplication for the main method to drive the store
  * front.
+ *@author gfost
+ *@version 2.0
  */
 public class StoreFrontApplication {
 
@@ -73,15 +76,13 @@ public class StoreFrontApplication {
 					System.out.println("Whoops! We don't have that item. Let's start again. Do you want to Shop, Purchase, ReemoveItemFromCart, CancelPurchase, or Leave?");
 				}
 				
-				//TODO: Remove items from the cart if they leave
-
 				command = input.next();
 			} else if (command.toLowerCase().equals("purchase")) {
-				/**
-				 * purchases items. Since inventory is already handled with adding item to cart,
-				 * cart just needs cleared
-				 */
-				cart.completePurchase();
+
+				ArrayList<SalableProduct> itemsPurchased = new ArrayList<SalableProduct>();
+				itemsPurchased = cart.getCart();
+				inventory.purchaseProducts(itemsPurchased);
+				cart.clearCart();
 
 				System.out.println(
 						"Thanks for your purchase! Want to buy more? If so, say Shop! If you are done, say Purchase, Leave or CancelPurchase.");
