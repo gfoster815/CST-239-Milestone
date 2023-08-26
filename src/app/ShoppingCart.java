@@ -48,7 +48,9 @@ public class ShoppingCart {
 			System.out.println(cart.get(i).getName() + " $" + cart.get(i).getPrice());
 		}
 	}
-
+/** 
+ * @return Array of ShoppingCart because InventoryManager and ShoppingCart do not have a direct relationship. 
+ */
 	public ArrayList<SalableProduct> getCart(){
 			return cart;
 	}

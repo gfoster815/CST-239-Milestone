@@ -6,8 +6,9 @@ import java.util.ArrayList;
 /**
  * Creates class of StoreFrontApplication for the main method to drive the store
  * front.
- *@author gfost
- *@version 2.0
+ * 
+ * @author gfost
+ * @version 2.0
  */
 public class StoreFrontApplication {
 
@@ -56,29 +57,31 @@ public class StoreFrontApplication {
 
 				command = input.next();
 				if (command.toLowerCase().equals("leave")) {
-					break; 
+					break;
 				}
 				/**
 				 * takes product that is mentioned to add to cart and take out of inventory
 				 */
-				
+
 				boolean isValid = inventory.isValidItem(command);
 				if (isValid) {
-				SalableProduct tempProduct = inventory.getProductOffShelf(command);
-				cart.addItemToCart(tempProduct);
-				System.out.println("Check out your cart!");
-				cart.showCart();
-				
-				System.out.println(
-						"Want to buy more? If so, say Shop! If you are done, say Purchase, RemoveItemFromCart, CancelPurchase, or Leave.");
+					SalableProduct tempProduct = inventory.getProductOffShelf(command);
+					cart.addItemToCart(tempProduct);
+					System.out.println("Check out your cart!");
+					cart.showCart();
+
+					System.out.println(
+							"Want to buy more? If so, say Shop! If you are done, say Purchase, RemoveItemFromCart, CancelPurchase, or Leave.");
+				} else {
+					System.out.println(
+							"Whoops! We don't have that item. Let's start again. Do you want to Shop, Purchase, ReemoveItemFromCart, CancelPurchase, or Leave?");
 				}
-				else {
-					System.out.println("Whoops! We don't have that item. Let's start again. Do you want to Shop, Purchase, ReemoveItemFromCart, CancelPurchase, or Leave?");
-				}
-				
+
 				command = input.next();
 			} else if (command.toLowerCase().equals("purchase")) {
-
+				// Allows the list of cart items to be temporarily turned into an array of
+				// salable products, then moved over to Inventory since there is no direct
+				// relationship between Cart and Inventory
 				ArrayList<SalableProduct> itemsPurchased = new ArrayList<SalableProduct>();
 				itemsPurchased = cart.getCart();
 				inventory.purchaseProducts(itemsPurchased);
@@ -117,8 +120,7 @@ public class StoreFrontApplication {
 			} else {
 				if (command.toLowerCase().equals("leave")) {
 					break;
-				}
-				else {
+				} else {
 					System.out.println("Whoops! That wasn't an option. What would you like to do?");
 					command = input.next();
 				}

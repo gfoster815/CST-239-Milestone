@@ -47,7 +47,10 @@ public class InventoryManager {
 		}
 		return product;
 	}
-	
+	/**
+	 * Decreases quantity of items once they are sold, with the purchase
+	 * @param itemsInCart is an array of SalableProducts
+	 */
 	public void purchaseProducts(ArrayList<SalableProduct> itemsInCart) {
 		for (int i = 0; i < itemsInCart.size(); i++) {
 			itemsInCart.get(i).decrementQuantity();
