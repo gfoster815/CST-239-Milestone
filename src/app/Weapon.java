@@ -1,16 +1,15 @@
 package app;
 /**
- * Class Health that extends SalableProduct
+ * Class Weapon that extends SalableProduct
  */
-public class Health extends SalableProduct {
+public class Weapon extends SalableProduct {
 	/**
-	 * int healthGained variable specific to Health class
+	 * New variable damageType specific to Weapon
 	 */
-	private int healthGained;
-	
-	public Health(String name, String description, double price, int healthGained) {
+	private String damageType;
+	public Weapon(String name, String description, double price, String damageType) {
 		super(name, description, price);
-		this.healthGained = healthGained;
+		this.damageType = damageType;
+		
 	}
-
 }
