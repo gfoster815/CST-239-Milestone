@@ -13,3 +13,6 @@ Milestone 1:
 [cst-239 assignment Part2.zip](https://github.com/gfoster815/CST-239-Milestone/files/12386765/cst-239.assignment.Part2.zip)
 
 Milestone 2:
+[Milestone2 Part 1.zip](https://github.com/gfoster815/CST-239-Milestone/files/12448426/Milestone2.Part.1.zip)
+
+[Milestone2 Part2.zip](https://github.com/gfoster815/CST-239-Milestone/files/12448427/Milestone2.Part2.zip)
