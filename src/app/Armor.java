@@ -11,6 +11,5 @@ public class Armor extends SalableProduct {
 	public Armor(String name, String description, double price, String areaOfProtection) {
 		super(name, description, price);
 		this.areaOfProtection = areaOfProtection;
-		//comment
 	}
 }
