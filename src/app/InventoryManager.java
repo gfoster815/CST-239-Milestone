@@ -1,6 +1,8 @@
 package app;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Creates class InventoryManager to manage inventory
@@ -27,6 +29,9 @@ public class InventoryManager {
 	 */
 	public void showInventory() {
 
+		Collections.sort(catalog);
+
+		
 		for (int i = 0; i < catalog.size(); i++) {
 			System.out.println(catalog.get(i).getName() + " $" + catalog.get(i).getPrice() + " Quantity: "
 					+ catalog.get(i).getQuantity());
@@ -42,18 +47,19 @@ public class InventoryManager {
 		SalableProduct product = null;
 		for (int i = 0; i < catalog.size(); i++) {
 			if (catalog.get(i).getName().equals(name)) {
+				catalog.get(i).decrementQuantity();
 				return catalog.get(i);
 			}
 		}
 		return product;
 	}
 	/**
-	 * Decreases quantity of items once they are sold, with the purchase
+	 * Increases quantity of items once they are all returned, with the CancelPurchase
 	 * @param itemsInCart is an array of SalableProducts
 	 */
-	public void purchaseProducts(ArrayList<SalableProduct> itemsInCart) {
+	public void returnAllProducts(ArrayList<SalableProduct> itemsInCart) {
 		for (int i = 0; i < itemsInCart.size(); i++) {
-			itemsInCart.get(i).decrementQuantity();
+			itemsInCart.get(i).incrementQuantity();
 
 		}
 	}
@@ -61,7 +67,7 @@ public class InventoryManager {
 	/**
 	 * @param name is grabbed and identifies product that is returned to the shelf
 	 * @return the product that is put onto the shelf, and increases inventory
-	 *         quantity by 1
+	 *         quantity by 1. Individual cancel purchase
 	 */
 	public SalableProduct cancelPurchase(String name) {
 		SalableProduct product = null;
@@ -73,7 +79,11 @@ public class InventoryManager {
 		}
 		return product;
 	}
-	
+	/**
+	 * Verifies that item selected is a valid product in inventory
+	 * @param name
+	 * @return boolean
+	 */
 	public boolean isValidItem(String name) {
 		for (int i = 0; i < catalog.size(); i++) {
 			if (catalog.get(i).getName().equals(name)) {
@@ -82,5 +92,6 @@ public class InventoryManager {
 		}
 		return false;
 	}
+	
 
 }

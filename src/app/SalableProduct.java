@@ -3,7 +3,7 @@ package app;
 /**
  * Creates SalableProduct class
  */
-public class SalableProduct {
+public class SalableProduct implements Comparable<SalableProduct> {
 	/**
 	 * String name that identifies the name of a product
 	 */
@@ -103,6 +103,16 @@ public class SalableProduct {
 	 */
 	public void incrementQuantity() {
 		this.quantity++;
+	}
+
+	@Override
+	public int compareTo(SalableProduct o) {
+		int value = this.getName().toLowerCase().compareTo(o.getName().toLowerCase());
+		if (value == 0) {
+			return this.getName().compareTo(o.getName());
+		} else {
+			return value;
+		}
 	}
 
 }

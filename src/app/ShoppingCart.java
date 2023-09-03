@@ -44,6 +44,9 @@ public class ShoppingCart {
 	 * shopping cart.
 	 */
 	public void showCart() {
+		if (cart.size() == 0) {
+			System.out.println("Your cart is empty.");
+		}
 		for (int i = 0; i < cart.size(); i++) {
 			System.out.println(cart.get(i).getName() + " $" + cart.get(i).getPrice());
 		}
@@ -60,6 +63,20 @@ public class ShoppingCart {
 	 */
 	public void clearCart() {
 		cart.clear();
+	}
+	
+	/**
+	 * Verifies that item selected is a valid product in cart
+	 * @param name
+	 * @return boolean
+	 */
+	public boolean isValidItem(String name) {
+		for (int i = 0; i < cart.size(); i++) {
+			if (cart.get(i).getName().equals(name)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
