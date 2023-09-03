@@ -112,7 +112,7 @@ public class SalableProduct implements Comparable<SalableProduct> {
 	public int compareTo(SalableProduct o) {
 		int value = this.getName().toLowerCase().compareTo(o.getName().toLowerCase());
 		if (value == 0) {
-			return this.getName().compareTo(o.getName());
+			return this.getName().toLowerCase().compareTo(o.getName().toLowerCase());
 		} else {
 			return value;
 		}
