@@ -12,3 +12,6 @@ https://loom.com/share/folder/a559fed471b24268a49e65a7fb9f1b90
 
 Milestone 2:
 https://loom.com/share/folder/98739eece395434e944c3c8da426e368
+
+Milestone 3:
+https://loom.com/share/folder/3d4588f13c2e461789c47c87ef078744
