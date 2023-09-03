@@ -105,6 +105,9 @@ public class SalableProduct implements Comparable<SalableProduct> {
 		this.quantity++;
 	}
 
+	/**
+	 * Overrides compareTo and compares name of products, and puts them in alphabetical order on sort
+	 */
 	@Override
 	public int compareTo(SalableProduct o) {
 		int value = this.getName().toLowerCase().compareTo(o.getName().toLowerCase());
