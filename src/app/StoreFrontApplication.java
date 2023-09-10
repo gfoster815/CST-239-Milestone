@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * front.
  * 
  * @author gfost
- * @version 3.0
+ * @version 4.0
  */
 public class StoreFrontApplication {
 
@@ -60,18 +60,8 @@ public class StoreFrontApplication {
  * @param inventory
  */
 	private void open(InventoryManager inventory) {
-		Weapon sword = new Weapon("Sword", "Does 3 melee damage", 49.99, "slashing");
-		inventory.addProductToInventory(sword);
-		Weapon mace = new Weapon("Mace", "Does 5 melee damage", 69.99, "bludgeoning");
-		inventory.addProductToInventory(mace);
-		Armor shield = new Armor("Shield", "Protects 4 melee damage", 59.99, "body");
-		inventory.addProductToInventory(shield);
-		Armor helmet = new Armor("Helmet", "Prtects 1 melee damage", 19.99, "head");
-		inventory.addProductToInventory(helmet);
-		Health potion = new Health("Potion", "Drink, then heals 5 damage", 39.99, 5);
-		inventory.addProductToInventory(potion);
-		Health sandwich = new Health("Sandwich", "Eat, then heals 2 damage", 14.99, 2);
-		inventory.addProductToInventory(sandwich);
+		
+		inventory.addProductsToInventory();
 
 		System.out.println("Welcome to Garrett's Fantasy Costco! We will help you with any of your fighting needs!");
 		System.out.println("What would you like to do? Say: Shop or Leave.");
@@ -98,6 +88,7 @@ public class StoreFrontApplication {
 		else if (isValid) {
 			SalableProduct tempProduct = inventory.getProductOffShelf(command);
 			cart.addItemToCart(tempProduct);
+			inventory.adjustInventory();
 
 			System.out.println("Check out your purchases in your shopping cart!");
 			cart.showCart();
@@ -127,10 +118,14 @@ public class StoreFrontApplication {
 			itemsPurchased = cart.getCart();
 			inventory.returnAllProducts(itemsPurchased);
 			cart.clearCart();
+			inventory.adjustInventory();
+
 		} else if (isValid) {
 			cart.removeItemFromCart(command);
 			inventory.cancelPurchase(command);
 			System.out.println("Thanks. Here is your cart of purchases now.");
+			inventory.adjustInventory();
+
 		} else {
 			System.out.println("Whoops! That's not an item you can remove from cart. Below is your cart.");
 		}

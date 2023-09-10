@@ -20,6 +20,11 @@ public class SalableProduct implements Comparable<SalableProduct> {
 	 * int gives the quantity of the product
 	 */
 	private int quantity;
+	
+
+	public SalableProduct() {
+		
+	}
 
 	/**
 	 * creates object SalabaleProduct
@@ -28,11 +33,12 @@ public class SalableProduct implements Comparable<SalableProduct> {
 	 * @param Description initialized
 	 * @param Price       initialized
 	 */
-	public SalableProduct(String Name, String Description, double Price) {
+	public SalableProduct(String Name, String Description, double Price, int quantity) {
 		this.name = Name;
 		this.description = Description;
 		this.price = Price;
-		quantity = 3;
+		this.quantity = quantity;
+
 	}
 
 	/**

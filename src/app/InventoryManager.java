@@ -1,13 +1,15 @@
 package app;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 /**
  * Creates class InventoryManager to manage inventory
  */
 public class InventoryManager {
+	private ArrayList<Weapon> weaponCatalog;
+	private ArrayList<Health> healthCatalog;
+	private ArrayList<Armor> armorCatalog;
 	private ArrayList<SalableProduct> catalog;
 
 	/**
@@ -15,13 +17,23 @@ public class InventoryManager {
 	 */
 	public InventoryManager() {
 		catalog = new ArrayList<SalableProduct>();
+		weaponCatalog = new ArrayList<Weapon>();
+		armorCatalog = new ArrayList<Armor>();
+		healthCatalog = new ArrayList<Health>();
+
 	}
 
 	/**
 	 * @param product is added to the array of products
 	 */
-	public void addProductToInventory(SalableProduct product) {
-		catalog.add(product);
+	public void addProductsToInventory() {
+		weaponCatalog = WeaponFileService.readFromFile("weaponInventory.json");
+		healthCatalog = HealthFileService.readFromFile("healthInventory.json");
+		armorCatalog = ArmorFileService.readFromFile("armorInventory.json");
+		catalog.addAll(armorCatalog);
+		catalog.addAll(healthCatalog);
+		catalog.addAll(weaponCatalog);
+
 	}
 
 	/**
@@ -31,11 +43,11 @@ public class InventoryManager {
 
 		Collections.sort(catalog);
 
-		
 		for (int i = 0; i < catalog.size(); i++) {
 			System.out.println(catalog.get(i).getName() + " $" + catalog.get(i).getPrice() + " Quantity: "
 					+ catalog.get(i).getQuantity());
 		}
+
 	}
 
 	/**
@@ -53,8 +65,38 @@ public class InventoryManager {
 		}
 		return product;
 	}
+/**
+ * This will adjust inventory files for products when a product is purchased or returend
+ */
+	public void adjustInventory() {
+		for (int i = 0; i < armorCatalog.size(); i++) {
+			if (i == 0) {
+				ArmorFileService.saveToFile("ArmorInventory.json", armorCatalog.get(i), false);
+			} else {
+				ArmorFileService.saveToFile("ArmorInventory.json", armorCatalog.get(i), true);
+			}
+		}
+		for (int i = 0; i < healthCatalog.size(); i++) {
+			if (i == 0) {
+				HealthFileService.saveToFile("HealthInventory.json", healthCatalog.get(i), false);
+			} else
+				HealthFileService.saveToFile("HealthInventory.json", healthCatalog.get(i), true);
+		}
+
+		for (int i = 0; i < weaponCatalog.size(); i++) {
+			if (i == 0) {
+				WeaponFileService.saveToFile("WeaponInventory.json", weaponCatalog.get(i), false);
+			} else {
+				WeaponFileService.saveToFile("WeaponInventory.json", weaponCatalog.get(i), true);
+			}
+
+		}
+	}
+
 	/**
-	 * Increases quantity of items once they are all returned, with the CancelPurchase
+	 * Increases quantity of items once they are all returned, with the
+	 * CancelPurchase
+	 * 
 	 * @param itemsInCart is an array of SalableProducts
 	 */
 	public void returnAllProducts(ArrayList<SalableProduct> itemsInCart) {
@@ -79,8 +121,10 @@ public class InventoryManager {
 		}
 		return product;
 	}
+
 	/**
 	 * Verifies that item selected is a valid product in inventory
+	 * 
 	 * @param name
 	 * @return boolean
 	 */
@@ -92,6 +136,5 @@ public class InventoryManager {
 		}
 		return false;
 	}
-	
 
 }
