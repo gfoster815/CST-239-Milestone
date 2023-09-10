@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class ArmorFileService implements FileService {
 
-	public static void saveToFile(String filename, SalableProduct product, boolean append) {
+	public static void saveToFile(String filename, Armor product, boolean append) {
 
 		PrintWriter pw;
 
@@ -22,7 +22,7 @@ public class ArmorFileService implements FileService {
 			FileWriter fw = new FileWriter(file, append);
 			pw = new PrintWriter(fw);
 
-			// Write Car as JSON
+			// Write Armor as JSON
 			ObjectMapper objectMapper = new ObjectMapper();
 			String json = objectMapper.writeValueAsString(product);
 			pw.println(json);

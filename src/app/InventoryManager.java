@@ -66,7 +66,7 @@ public class InventoryManager {
 		return product;
 	}
 /**
- * This will adjust inventory files for products when a product is purchased or returend
+ * This will adjust inventory files for products when a product is purchased or returned
  */
 	public void adjustInventory() {
 		for (int i = 0; i < armorCatalog.size(); i++) {

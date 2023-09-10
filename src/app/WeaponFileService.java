@@ -22,7 +22,7 @@ public class WeaponFileService implements FileService {
 			FileWriter fw = new FileWriter(file, append);
 			pw = new PrintWriter(fw);
 
-			// Write Car as JSON
+			// Write Weapon as JSON
 			ObjectMapper objectMapper = new ObjectMapper();
 			String json = objectMapper.writeValueAsString(product);
 			pw.println(json);
