@@ -11,7 +11,9 @@ public class InventoryManager {
 	private ArrayList<Health> healthCatalog;
 	private ArrayList<Armor> armorCatalog;
 	private ArrayList<SalableProduct> catalog;
-
+	private ProductFileService<Armor> armorFile;
+	private ProductFileService<Health> healthFile;
+	private ProductFileService<Weapon> weaponFile;
 	/**
 	 * Creates object InventoryManager to have an array of products
 	 */
@@ -27,9 +29,14 @@ public class InventoryManager {
 	 * @param product is added to the array of products
 	 */
 	public void addProductsToInventory() {
-		weaponCatalog = WeaponFileService.readFromFile("weaponInventory.json");
-		healthCatalog = HealthFileService.readFromFile("healthInventory.json");
-		armorCatalog = ArmorFileService.readFromFile("armorInventory.json");
+		armorFile = new ProductFileService(Armor.class);
+		healthFile = new ProductFileService(Health.class);
+		weaponFile = new ProductFileService(Weapon.class);
+
+		
+		weaponCatalog = weaponFile.readFromFile("weaponInventory.json");
+		healthCatalog = healthFile.readFromFile("healthInventory.json");
+		armorCatalog = armorFile.readFromFile("armorInventory.json");
 		catalog.addAll(armorCatalog);
 		catalog.addAll(healthCatalog);
 		catalog.addAll(weaponCatalog);
@@ -65,29 +72,31 @@ public class InventoryManager {
 		}
 		return product;
 	}
+
 /**
- * This will adjust inventory files for products when a product is purchased or returned
+ * This will adjust inventory files for products when a product is purchased or
+ * returned
  */
 	public void adjustInventory() {
 		for (int i = 0; i < armorCatalog.size(); i++) {
 			if (i == 0) {
-				ArmorFileService.saveToFile("ArmorInventory.json", armorCatalog.get(i), false);
+				armorFile.saveToFile("ArmorInventory.json", armorCatalog.get(i), false);
 			} else {
-				ArmorFileService.saveToFile("ArmorInventory.json", armorCatalog.get(i), true);
+				armorFile.saveToFile("ArmorInventory.json", armorCatalog.get(i), true);
 			}
 		}
 		for (int i = 0; i < healthCatalog.size(); i++) {
 			if (i == 0) {
-				HealthFileService.saveToFile("HealthInventory.json", healthCatalog.get(i), false);
+				healthFile.saveToFile("HealthInventory.json", healthCatalog.get(i), false);
 			} else
-				HealthFileService.saveToFile("HealthInventory.json", healthCatalog.get(i), true);
+				healthFile.saveToFile("HealthInventory.json", healthCatalog.get(i), true);
 		}
 
 		for (int i = 0; i < weaponCatalog.size(); i++) {
 			if (i == 0) {
-				WeaponFileService.saveToFile("WeaponInventory.json", weaponCatalog.get(i), false);
+				weaponFile.saveToFile("WeaponInventory.json", weaponCatalog.get(i), false);
 			} else {
-				WeaponFileService.saveToFile("WeaponInventory.json", weaponCatalog.get(i), true);
+				weaponFile.saveToFile("WeaponInventory.json", weaponCatalog.get(i), true);
 			}
 
 		}

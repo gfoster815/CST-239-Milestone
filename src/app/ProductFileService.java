@@ -11,9 +11,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * Will handle json records for the weaponInventory.json file
  */
-public class ArmorFileService implements FileService {
+public class ProductFileService<T> implements FileService {
+	
+	private ArrayList<T> products;
+	private Class<T> type;
+	
+	public ProductFileService(Class<T> type) {
+		this.type = type;
+	}
+	
 
-	public static void saveToFile(String filename, Armor product, boolean append) {
+	public void saveToFile(String filename, T product, boolean append) {
 
 		PrintWriter pw;
 
@@ -22,7 +30,7 @@ public class ArmorFileService implements FileService {
 			FileWriter fw = new FileWriter(file, append);
 			pw = new PrintWriter(fw);
 
-			// Write Armor as JSON
+			// Write Product as JSON
 			ObjectMapper objectMapper = new ObjectMapper();
 			String json = objectMapper.writeValueAsString(product);
 			pw.println(json);
@@ -34,8 +42,8 @@ public class ArmorFileService implements FileService {
 		}
 	}
 
-	public static ArrayList<Armor> readFromFile(String filename) {
-		ArrayList<Armor> products = new ArrayList<Armor>();
+	public  ArrayList<T> readFromFile(String filename) {
+		products = new ArrayList<T>();
 
 		try {
 			File file = new File(filename);
@@ -44,7 +52,7 @@ public class ArmorFileService implements FileService {
 			while (s.hasNext()) {
 				String json = s.nextLine();
 				ObjectMapper objectMapper = new ObjectMapper();
-				Armor product = objectMapper.readValue(json, Armor.class);
+				T product = objectMapper.readValue(json, type);
 
 				products.add(product);
 
