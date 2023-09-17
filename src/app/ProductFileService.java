@@ -14,12 +14,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ProductFileService<T> implements FileService {
 	
 	private ArrayList<T> products;
+	/**
+	 * Creates Class type variable so that Jackson objectmapper can read which class is being used
+	 */
 	private Class<T> type;
-	
+	/**
+	 * Constructor for object of ProductFileService
+	 * @param type is the Class (In this case, Weapon, Armor, or Health
+	 */
 	public ProductFileService(Class<T> type) {
 		this.type = type;
 	}
-	
+
 
 	public void saveToFile(String filename, T product, boolean append) {
 

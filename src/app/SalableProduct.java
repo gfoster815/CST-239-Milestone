@@ -20,10 +20,9 @@ public class SalableProduct implements Comparable<SalableProduct> {
 	 * int gives the quantity of the product
 	 */
 	private int quantity;
-	
 
 	public SalableProduct() {
-		
+
 	}
 
 	/**
@@ -111,17 +110,10 @@ public class SalableProduct implements Comparable<SalableProduct> {
 		this.quantity++;
 	}
 
-	/**
-	 * Overrides compareTo and compares name of products, and puts them in alphabetical order on sort
-	 */
 	@Override
 	public int compareTo(SalableProduct o) {
-		int value = this.getName().toLowerCase().compareTo(o.getName().toLowerCase());
-		if (value == 0) {
-			return this.getName().toLowerCase().compareTo(o.getName().toLowerCase());
-		} else {
-			return value;
-		}
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

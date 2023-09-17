@@ -3,6 +3,7 @@ package app;
 import java.util.ArrayList;
 import java.util.Collections;
 
+
 /**
  * Creates class InventoryManager to manage inventory
  */
@@ -14,6 +15,9 @@ public class InventoryManager {
 	private ProductFileService<Armor> armorFile;
 	private ProductFileService<Health> healthFile;
 	private ProductFileService<Weapon> weaponFile;
+	private SortByNameComparator nameComparator = new SortByNameComparator();
+	private SortByPriceComparator priceComparator = new SortByPriceComparator();
+
 	/**
 	 * Creates object InventoryManager to have an array of products
 	 */
@@ -29,11 +33,10 @@ public class InventoryManager {
 	 * @param product is added to the array of products
 	 */
 	public void addProductsToInventory() {
-		armorFile = new ProductFileService(Armor.class);
-		healthFile = new ProductFileService(Health.class);
-		weaponFile = new ProductFileService(Weapon.class);
+		armorFile = new ProductFileService<Armor>(Armor.class);
+		healthFile = new ProductFileService<Health>(Health.class);
+		weaponFile = new ProductFileService<Weapon>(Weapon.class);
 
-		
 		weaponCatalog = weaponFile.readFromFile("weaponInventory.json");
 		healthCatalog = healthFile.readFromFile("healthInventory.json");
 		armorCatalog = armorFile.readFromFile("armorInventory.json");
@@ -46,13 +49,32 @@ public class InventoryManager {
 	/**
 	 * displays full inventory of the catalog
 	 */
+
 	public void showInventory() {
+		Collections.sort(catalog, nameComparator);
+		iterateList(catalog);
+	}
 
-		Collections.sort(catalog);
+	/**
+	 * displays full inventory of the catalog with different sorting options
+	 * @param command is the command of which way the sorting will occur
+	 */
+	public void showInventory(String command) {
+		if (command.equals("sortbynameasc")) {
+			Collections.sort(catalog, nameComparator);
+			iterateList(catalog);
 
-		for (int i = 0; i < catalog.size(); i++) {
-			System.out.println(catalog.get(i).getName() + " $" + catalog.get(i).getPrice() + " Quantity: "
-					+ catalog.get(i).getQuantity());
+		} else if (command.equals("sortbynamedesc")) {
+			Collections.sort(catalog, nameComparator.reversed());
+			iterateList(catalog);
+
+		} else if (command.equals("sortbypriceasc")) {
+			Collections.sort(catalog, priceComparator);
+			iterateList(catalog);
+		} else if (command.equals("sortbypricedesc")) {
+			Collections.sort(catalog, priceComparator.reversed());
+			iterateList(catalog);
+
 		}
 
 	}
@@ -73,10 +95,10 @@ public class InventoryManager {
 		return product;
 	}
 
-/**
- * This will adjust inventory files for products when a product is purchased or
- * returned
- */
+	/**
+	 * This will adjust inventory files for products when a product is purchased or
+	 * returned
+	 */
 	public void adjustInventory() {
 		for (int i = 0; i < armorCatalog.size(); i++) {
 			if (i == 0) {
@@ -144,6 +166,13 @@ public class InventoryManager {
 			}
 		}
 		return false;
+	}
+
+	private void iterateList(ArrayList<SalableProduct> catalog) {
+		for (int i = 0; i < catalog.size(); i++) {
+			System.out.println(catalog.get(i).getName() + " $" + catalog.get(i).getPrice() + " Quantity: "
+					+ catalog.get(i).getQuantity());
+		}
 	}
 
 }
