@@ -8,7 +8,7 @@ import java.lang.Thread;
 public class ServerThread extends Thread {
 	
 	public void run() {
-		Server server = new Server();
+		AdminService server = new AdminService();
 		try {
 			server.start(6666);				
 			server.cleanup();
