@@ -16,4 +16,11 @@ public interface FileService {
 	 */
 	public static void readFromFile() {
 	}
+
+	/**
+	 * Will be used to read json data from file
+	 */
+	public static void readRawfile() {
+
+	}
 }

@@ -109,6 +109,13 @@ public class SalableProduct implements Comparable<SalableProduct> {
 	public void incrementQuantity() {
 		this.quantity++;
 	}
+	/**
+	 * increases quantity by set number
+	 * @param value Number set by admin
+	 */
+	public void incrementQuantity(int value) {
+		quantity = quantity + value;
+	}
 
 	@Override
 	public int compareTo(SalableProduct o) {

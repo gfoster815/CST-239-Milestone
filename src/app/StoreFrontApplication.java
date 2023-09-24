@@ -1,6 +1,7 @@
 package app;
 
 import java.util.Scanner;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -8,15 +9,18 @@ import java.util.ArrayList;
  * front.
  * 
  * @author gfost
- * @version 5.0
+ * @version 6.0
  */
 public class StoreFrontApplication {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		/**
-		 * Creates store front and sets up the command for prompted inputs
+		 * Creates store front and sets up the command for prompted inputs. Also starts thread for starting the server for Admin to run on.
 		 */
+
 		StoreFrontApplication store = new StoreFrontApplication();
+		ServerThread thread1 = new ServerThread();
+		thread1.start();
 		String command;
 		Scanner input = new Scanner(System.in);
 		/**
@@ -28,7 +32,7 @@ public class StoreFrontApplication {
 		 */
 		ShoppingCart cart = new ShoppingCart();
 
-		store.open(inventory);
+		store.open();
 		/**
 		 * Begins process of shopping
 		 */
@@ -37,7 +41,7 @@ public class StoreFrontApplication {
 		while (command.toLowerCase() != "leave") {
 
 			if (command.toLowerCase().equals("shop")) {
-				store.Purchase(inventory, cart, command, input);
+				store.purchase(inventory, cart, command, input);
 				command = input.next();
 			} else if (command.toLowerCase().equals("cancelpurchase")) {
 				store.cancelPurchase(inventory, cart, command, input);
@@ -54,6 +58,7 @@ public class StoreFrontApplication {
 		}
 		store.close();
 		input.close();
+
 	}
 
 	/**
@@ -61,41 +66,41 @@ public class StoreFrontApplication {
 	 * 
 	 * @param inventory
 	 */
-	private void open(InventoryManager inventory) {
+	private void open() {
 
-		inventory.addProductsToInventory();
+		
 
 		System.out.println("Welcome to Garrett's Fantasy Costco! We will help you with any of your fighting needs!");
 		System.out.println("What would you like to do? Say: Shop or Leave.");
 	}
 
-/**
- * User shops and makes purchase
- * @param inventory to show inventory and update on purchase
- * @param cart to show cart and update on purchase
- * @param command to watch for input of what item is being purchased
- * @param input to receive input from Scanner 
- */
-	private void Purchase(InventoryManager inventory, ShoppingCart cart, String command, Scanner input) {
+	/**
+	 * User shops and makes purchase
+	 * 
+	 * @param inventory to show inventory and update on purchase
+	 * @param cart      to show cart and update on purchase
+	 * @param command   to watch for input of what item is being purchased
+	 * @param input     to receive input from Scanner
+	 */
+	private void purchase(InventoryManager inventory, ShoppingCart cart, String command, Scanner input) {
+		inventory.resetInventory();
+		inventory.addProductsToInventory();
 		System.out.println("Great! Check out our wares! Type an item you would like to purchase. If none, say Stop.");
 		inventory.showInventory();
-		
-		do {System.out.println("\nTrouble viewing our inventory? You can also sort differently with these commands:");
-		System.out.println("sortbynameasc");
-		System.out.println("sortbynamedesc");
-		System.out.println("sortbypriceasc");
-		System.out.println("sortbypricedesc");
-		command = input.next();
-		if (command.equals("sortbynameasc") || 
-				command.equals("sortbynamedesc") || 
-				command.equals("sortbypriceasc") || 
-				command.equals("sortbypricedesc")) {
-			inventory.showInventory(command);
-		}		} while (command.equals("sortbynameasc") || 
-				command.equals("sortbynamedesc") || 
-				command.equals("sortbypriceasc") || 
-				command.equals("sortbypricedesc") );
 
+		do {
+			System.out.println("\nTrouble viewing our inventory? You can also sort differently with these commands:");
+			System.out.println("sortbynameasc");
+			System.out.println("sortbynamedesc");
+			System.out.println("sortbypriceasc");
+			System.out.println("sortbypricedesc");
+			command = input.next();
+			if (command.equals("sortbynameasc") || command.equals("sortbynamedesc") || command.equals("sortbypriceasc")
+					|| command.equals("sortbypricedesc")) {
+				inventory.showInventory(command);
+			}
+		} while (command.equals("sortbynameasc") || command.equals("sortbynamedesc") || command.equals("sortbypriceasc")
+				|| command.equals("sortbypricedesc"));
 
 		boolean isValid = inventory.isValidItem(command);
 		if (command.toLowerCase().equals("stop")) {
@@ -113,7 +118,7 @@ public class StoreFrontApplication {
 			System.out.println("Check out your purchases in your shopping cart!");
 			cart.showCart();
 
-			System.out.println("Want to buy more? If so, say Shop! If you are done, say CancelPurchase, or Leave.");
+			System.out.println("\nWant to buy more? If so, say Shop! If you are done, say CancelPurchase, or Leave.");
 		} else {
 			System.out.println(
 					"Whoops! We don't have that item. Let's start again. Do you want to Shop, CancelPurchase, or Leave?");
@@ -164,6 +169,7 @@ public class StoreFrontApplication {
 	 */
 	private void close() {
 		System.out.println("Thanks for coming!");
+
 	}
 
 }

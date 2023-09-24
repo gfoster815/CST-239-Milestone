@@ -71,5 +71,28 @@ public class ProductFileService<T> implements FileService {
 
 		return products;
 	}
+	/**
+	 * Method to return json files raw for Admin
+	 * @param filename
+	 * @return
+	 */
+	public ArrayList<String> readRawFile(String filename) {
+		ArrayList<String> products = new ArrayList<String>();
+		try {
+			File file = new File(filename);
+			Scanner s = new Scanner(file);
+
+			while (s.hasNext()) {
+				String json = s.nextLine();
+				products.add(json);
+			}
+			s.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("There was an issue accessing this file. Please ensure your file is where it should be.");
+		}
+
+		return products;
+	}
 
 }
