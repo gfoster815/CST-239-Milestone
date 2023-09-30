@@ -29,20 +29,22 @@ public class InventoryManager {
 		weaponCatalog = new ArrayList<Weapon>();
 		armorCatalog = new ArrayList<Armor>();
 		healthCatalog = new ArrayList<Health>();
-
 	}
-/**
- * Displays raw inventory to the Admin user
- * @return Arraylist string
- */
-	public ArrayList<String> showInventoryToAdmin() {
+
+	/**
+	 * Displays raw inventory to the Admin user
+	 * 
+	 * @return ArrayList string
+	 */
+	public ArrayList<String> showInventoryToAdmin(String armorInventoryFile, String healthInventoryFile,
+			String weaponInventoryFile) {
 		armorFileRaw = new ProductFileService<Armor>(Armor.class);
 		healthFileRaw = new ProductFileService<Health>(Health.class);
 		weaponFileRaw = new ProductFileService<Weapon>(Weapon.class);
 
-		ArrayList<String> rawArmor = armorFileRaw.readRawFile("armorInventory.json");
-		ArrayList<String> rawHealth = healthFileRaw.readRawFile("healthInventory.json");
-		ArrayList<String> rawWeapon = weaponFileRaw.readRawFile("weaponInventory.json");
+		ArrayList<String> rawArmor = armorFileRaw.readRawFile(armorInventoryFile);
+		ArrayList<String> rawHealth = healthFileRaw.readRawFile(healthInventoryFile);
+		ArrayList<String> rawWeapon = weaponFileRaw.readRawFile(weaponInventoryFile);
 
 		rawCatalog = new ArrayList<String>();
 		rawCatalog.addAll(rawWeapon);
@@ -56,17 +58,23 @@ public class InventoryManager {
 	/**
 	 * @param product is added to the array of products
 	 */
-	public void addProductsToInventory() {
+	public boolean addProductsToInventory(String armorInventoryFile, String healthInventoryFile,
+			String weaponInventoryFile) {
+
+		catalog.clear();
+
 		armorFile = new ProductFileService<Armor>(Armor.class);
 		healthFile = new ProductFileService<Health>(Health.class);
 		weaponFile = new ProductFileService<Weapon>(Weapon.class);
 
-		weaponCatalog = weaponFile.readFromFile("weaponInventory.json");
-		healthCatalog = healthFile.readFromFile("healthInventory.json");
-		armorCatalog = armorFile.readFromFile("armorInventory.json");
+		weaponCatalog = weaponFile.readFromFile(weaponInventoryFile);
+		healthCatalog = healthFile.readFromFile(healthInventoryFile);
+		armorCatalog = armorFile.readFromFile(armorInventoryFile);
 		catalog.addAll(armorCatalog);
 		catalog.addAll(healthCatalog);
 		catalog.addAll(weaponCatalog);
+		
+		return true;
 
 	}
 
@@ -85,18 +93,18 @@ public class InventoryManager {
 	 * @param command is the command of which way the sorting will occur
 	 */
 	public void showInventory(String command) {
-		if (command.equals("sortbynameasc")) {
+		if (command.equals("Sortbynameasc")) {
 			Collections.sort(catalog, nameComparator);
 			iterateList(catalog);
 
-		} else if (command.equals("sortbynamedesc")) {
+		} else if (command.equals("Sortbynamedesc")) {
 			Collections.sort(catalog, nameComparator.reversed());
 			iterateList(catalog);
 
-		} else if (command.equals("sortbypriceasc")) {
+		} else if (command.equals("Sortbypriceasc")) {
 			Collections.sort(catalog, priceComparator);
 			iterateList(catalog);
-		} else if (command.equals("sortbypricedesc")) {
+		} else if (command.equals("Sortbypricedesc")) {
 			Collections.sort(catalog, priceComparator.reversed());
 			iterateList(catalog);
 
@@ -124,72 +132,84 @@ public class InventoryManager {
 	 * This will adjust inventory files for products when a product is purchased or
 	 * returned
 	 */
-	public void adjustInventory() {
+	public boolean adjustInventory(String armorInventoryFile, String healthInventoryFile, String weaponInventoryFile) {
 		for (int i = 0; i < armorCatalog.size(); i++) {
 			if (i == 0) {
-				armorFile.saveToFile("ArmorInventory.json", armorCatalog.get(i), false);
+				armorFile.saveToFile(armorInventoryFile, armorCatalog.get(i), false);
 			} else {
-				armorFile.saveToFile("ArmorInventory.json", armorCatalog.get(i), true);
+				armorFile.saveToFile(armorInventoryFile, armorCatalog.get(i), true);
 			}
 		}
 		for (int i = 0; i < healthCatalog.size(); i++) {
 			if (i == 0) {
-				healthFile.saveToFile("HealthInventory.json", healthCatalog.get(i), false);
+				healthFile.saveToFile(healthInventoryFile, healthCatalog.get(i), false);
 			} else
-				healthFile.saveToFile("HealthInventory.json", healthCatalog.get(i), true);
+				healthFile.saveToFile(healthInventoryFile, healthCatalog.get(i), true);
 		}
 
 		for (int i = 0; i < weaponCatalog.size(); i++) {
 			if (i == 0) {
-				weaponFile.saveToFile("WeaponInventory.json", weaponCatalog.get(i), false);
+				weaponFile.saveToFile(weaponInventoryFile, weaponCatalog.get(i), false);
 			} else {
-				weaponFile.saveToFile("WeaponInventory.json", weaponCatalog.get(i), true);
+				weaponFile.saveToFile(weaponInventoryFile, weaponCatalog.get(i), true);
 			}
 
 		}
+		
+		return true;
 	}
+
 	/**
 	 * Adds weapon product to the inventory
+	 * 
 	 * @param product
 	 */
-	public void addWeaponInventory(Weapon product) {
-		weaponFile.saveToFile("WeaponInventory.json", product, true);
+	public void addWeaponInventory(Weapon product, String weaponInventoryFile) {
+		weaponFile.saveToFile(weaponInventoryFile, product, true);
 
 	}
+
 	/**
 	 * Adds armor product to the inventory
+	 * 
 	 * @param product
 	 */
-	public void addArmorInventory(Armor product) {
-		armorFile.saveToFile("ArmorInventory.json", product, true);
+	public void addArmorInventory(Armor product, String armorInventoryFile) {
+		armorFile.saveToFile(armorInventoryFile, product, true);
 
 	}
+
 	/**
 	 * Adds health product to the inventory
+	 * 
 	 * @param product
 	 */
-	public void addHealthInventory(Health product) {
-		healthFile.saveToFile("HealthInventory.json", product, true);
+	public void addHealthInventory(Health product, String healthInventoryFile) {
+		healthFile.saveToFile(healthInventoryFile, product, true);
 
 	}
-/**
- * For admin side only - adjusts inventory for product by input
- * @param name
- * @param count
- * @return
- */
-	public int adjustInventoryCount(String name, int count) {
+
+	/**
+	 * For admin side only - adjusts inventory for product by input
+	 * 
+	 * @param name
+	 * @param count
+	 * @return
+	 */
+	public int adjustInventoryCount(String name, int count, String armorInventoryFile,
+			String healthInventoryFile,
+			String weaponInventoryFile) {
 		SalableProduct tempProduct = null;
-		addProductsToInventory();
+		addProductsToInventory(armorInventoryFile, healthInventoryFile, weaponInventoryFile);
 		for (int i = 0; i < catalog.size(); i++) {
 			if (catalog.get(i).getName().equals(name)) {
 				tempProduct = catalog.get(i);
 				catalog.get(i).incrementQuantity(count);
 			}
 		}
-		adjustInventory();
+		adjustInventory(armorInventoryFile, healthInventoryFile, weaponInventoryFile);
 		return tempProduct.getQuantity();
-		
+
 	}
 
 	/**
@@ -200,8 +220,12 @@ public class InventoryManager {
 	 */
 	public void returnAllProducts(ArrayList<SalableProduct> itemsInCart) {
 		for (int i = 0; i < itemsInCart.size(); i++) {
-			itemsInCart.get(i).incrementQuantity();
-
+			String product = itemsInCart.get(i).getName();
+			for (int j = 0; j < catalog.size(); j++) {
+				if (catalog.get(j).getName().equals(product)) {
+					catalog.get(j).incrementQuantity();
+				}
+			}
 		}
 	}
 
@@ -241,12 +265,6 @@ public class InventoryManager {
 			System.out.println(catalog.get(i).getName() + " $" + catalog.get(i).getPrice() + " Quantity: "
 					+ catalog.get(i).getQuantity());
 		}
-	}
-	/**
-	 * Resets inventory for User on front end so that while admin makes changes while a User is shopping, it updates with up to date products
-	 */
-	public void resetInventory() {
-		catalog.clear();
 	}
 
 }

@@ -9,9 +9,14 @@ import java.util.ArrayList;
  * front.
  * 
  * @author gfost
- * @version 6.0
+ * @version 7.0
  */
 public class StoreFrontApplication {
+	
+	private String sortCommand;
+	final private String weaponInventoryFile = ("weaponInventory.json");
+	final private String healthInventoryFile = ("healthInventory.json");
+	final private String armorInventoryFile = ("armorInventory.json");
 
 	public static void main(String[] args) throws IOException {
 		/**
@@ -83,24 +88,33 @@ public class StoreFrontApplication {
 	 * @param input     to receive input from Scanner
 	 */
 	private void purchase(InventoryManager inventory, ShoppingCart cart, String command, Scanner input) {
-		inventory.resetInventory();
-		inventory.addProductsToInventory();
+		
+		inventory.addProductsToInventory(armorInventoryFile, healthInventoryFile, weaponInventoryFile);
 		System.out.println("Great! Check out our wares! Type an item you would like to purchase. If none, say Stop.");
+		
+		if (sortCommand == null) {
 		inventory.showInventory();
+		}
+		else {
+			inventory.showInventory(sortCommand);
+		}
 
 		do {
 			System.out.println("\nTrouble viewing our inventory? You can also sort differently with these commands:");
-			System.out.println("sortbynameasc");
-			System.out.println("sortbynamedesc");
-			System.out.println("sortbypriceasc");
-			System.out.println("sortbypricedesc");
+			System.out.println("Sortbynameasc");
+			System.out.println("Sortbynamedesc");
+			System.out.println("Sortbypriceasc");
+			System.out.println("Sortbypricedesc");
 			command = input.next();
-			if (command.equals("sortbynameasc") || command.equals("sortbynamedesc") || command.equals("sortbypriceasc")
-					|| command.equals("sortbypricedesc")) {
+			command = command.substring(0,1).toUpperCase()+ command.substring(1).toLowerCase();
+			
+			if (command.equals("Sortbynameasc") || command.equals("Sortbynamedesc") || command.equals("Sortbypriceasc")
+					|| command.equals("Sortbypricedesc")) {
+				sortCommand = command;
 				inventory.showInventory(command);
 			}
-		} while (command.equals("sortbynameasc") || command.equals("sortbynamedesc") || command.equals("sortbypriceasc")
-				|| command.equals("sortbypricedesc"));
+		} while (command.equals("Sortbynameasc") || command.equals("Sortbynamedesc") || command.equals("Sortbypriceasc")
+				|| command.equals("Sortbypricedesc"));
 
 		boolean isValid = inventory.isValidItem(command);
 		if (command.toLowerCase().equals("stop")) {
@@ -113,7 +127,7 @@ public class StoreFrontApplication {
 		else if (isValid) {
 			SalableProduct tempProduct = inventory.getProductOffShelf(command);
 			cart.addItemToCart(tempProduct);
-			inventory.adjustInventory();
+			inventory.adjustInventory(armorInventoryFile, healthInventoryFile, weaponInventoryFile);
 
 			System.out.println("Check out your purchases in your shopping cart!");
 			cart.showCart();
@@ -138,6 +152,8 @@ public class StoreFrontApplication {
 				"What item do you want to return out of your shopping cart? If you want to return them all, say ReturnAll.");
 		cart.showCart();
 		command = input.next();
+		command = command.substring(0,1).toUpperCase()+ command.substring(1).toLowerCase();
+
 		boolean isValid = cart.isValidItem(command);
 
 		if (command.toLowerCase().equals("returnall")) {
@@ -145,13 +161,13 @@ public class StoreFrontApplication {
 			itemsPurchased = cart.getCart();
 			inventory.returnAllProducts(itemsPurchased);
 			cart.clearCart();
-			inventory.adjustInventory();
+			inventory.adjustInventory(armorInventoryFile, healthInventoryFile, weaponInventoryFile);
 
 		} else if (isValid) {
 			cart.removeItemFromCart(command);
 			inventory.cancelPurchase(command);
 			System.out.println("Thanks. Here is your cart of purchases now.");
-			inventory.adjustInventory();
+			inventory.adjustInventory(armorInventoryFile, healthInventoryFile, weaponInventoryFile);
 
 		} else {
 			System.out.println("Whoops! That's not an item you can remove from cart. Below is your cart.");

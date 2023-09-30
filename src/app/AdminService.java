@@ -18,6 +18,10 @@ public class AdminService {
 	private Socket clientSocket;
 	private PrintWriter out;
 	private BufferedReader in;
+	
+	final private String weaponInventoryFile = ("weaponInventory.json");
+	final private String healthInventoryFile = ("healthInventory.json");
+	final private String armorInventoryFile = ("armorInventory.json");
 /**
  * Runs the server code that reads Admin input and handles it as necessary.
  * @param port 6666
@@ -38,7 +42,7 @@ public class AdminService {
 		while ((inputLine = in.readLine()) != null) {
 			if (inputLine.indexOf("U") == 0) {
 				// Sets up existing Inventory to be edited
-				inventoryAdminManager.addProductsToInventory();
+				inventoryAdminManager.addProductsToInventory(armorInventoryFile, healthInventoryFile, weaponInventoryFile);
 				// Splits input from Admin to manipulate products
 				String[] tokens = inputLine.split("\\|");
 				// Handles adding more inventory of an existing product
@@ -53,7 +57,7 @@ public class AdminService {
 							out.println("The quantity was not a valid input. Please try again.");
 							continue;
 						}
-						int newQuantity = inventoryAdminManager.adjustInventoryCount(productName, quantityAdded);
+						int newQuantity = inventoryAdminManager.adjustInventoryCount(productName, quantityAdded, armorInventoryFile, healthInventoryFile, weaponInventoryFile);
 						out.println(String.format("New quantity of the " + productName + " product is " + newQuantity));
 					} else {
 						out.println("Invalid product given. The product name is Case sensitive. Please try again.");
@@ -84,13 +88,13 @@ public class AdminService {
 					if (!productAlreadyExists) {
 						if (tokens[1].equalsIgnoreCase("Weapon")) {
 							Weapon product = new Weapon(productName, productDescription, productPrice, productQuantity);
-							inventoryAdminManager.addWeaponInventory(product);
+							inventoryAdminManager.addWeaponInventory(product, weaponInventoryFile);
 						} else if (tokens[1].equalsIgnoreCase("Health")) {
 							Health product = new Health(productName, productDescription, productPrice, productQuantity);
-							inventoryAdminManager.addHealthInventory(product);
+							inventoryAdminManager.addHealthInventory(product, healthInventoryFile);
 						} else if (tokens[1].equalsIgnoreCase("Armor")) {
 							Armor product = new Armor(productName, productDescription, productPrice, productQuantity);
-							inventoryAdminManager.addArmorInventory(product);
+							inventoryAdminManager.addArmorInventory(product, armorInventoryFile);
 						}
 						out.println(
 								String.format("The " + productName + " was added to the " + tokens[1] + " inventory."));
@@ -107,7 +111,7 @@ public class AdminService {
 				// Returns inventory results
 			} else if ("R".equals(inputLine)) {
 				ArrayList<String> inventory = new ArrayList<String>();
-				inventory = inventoryAdminManager.showInventoryToAdmin();
+				inventory = inventoryAdminManager.showInventoryToAdmin(armorInventoryFile, healthInventoryFile, weaponInventoryFile);
 
 				out.println(inventory);
 				continue;
